@@ -1,0 +1,62 @@
+/* this is new Graphics - request file that will be always included before the bootstrap files in html */
+.deep-blue{background-color: #021D4F}
+.deep-blue .navbar-nav .nav-item a.nav-link{color: #dddddd!important;}
+.deep-blue .navbar-nav .nav-item a.nav-link:hover{color: #9fcdff!important;}
+.sub-header {background-color: #3377B3; min-height: 40px; overflow: auto}
+.sub-header span a.nav-link:hover{color: #d6d8db!important;}
+.banner-image{background-image: url('../images/vananjgraphic.png');}
+form.label-block label, .signup-form form p small{display: block}
+/*.login-form .g-recaptcha div{margin: 0 auto; text-align: center}
+.signup-form .g-recaptcha div{margin: 0 auto; text-align: left}*/
+.signup-form form iframe, .login-form iframe{display: block; margin-left: auto;margin-right: auto; width: 308px}
+.kreon-font{font-family: 'Kreon'}
+.customopacity{opacity: .8}
+.card .small-text{font-size: x-small}
+textarea {
+    height: 4em;
+    width: 100%;
+    border-radius: 0.2em;
+    resize: none;
+}
+
+#snackbar {
+    visibility: hidden;
+    min-width: 20em;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.2em;
+    padding: 1em;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 2em;
+    font-size: 1em;
+  }
+  
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
