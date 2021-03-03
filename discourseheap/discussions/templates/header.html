@@ -1,8 +1,22 @@
 
 <div>
-    <a href="{% url 'home' %}">home</a>
-    <a href="{% url 'about' %}">about</a>
-    <a href="{% url 'login' %}">login</a>
-    <a href="{% url 'logout' %}">logout</a>
-    <a href="{% url 'signup' %}">signup</a>
+    <div class="container py-3">
+
+        <div style="float:left;">
+            <a href="{% url 'home' %}" class="text-secondary p-2">Home</a>
+            <a href="{% url 'about' %}" class="text-secondary p-2">About</a>
+        </div>
+
+        <div style="float:right;">
+            {% if request.user.is_authenticated %}
+                <b class="nav-head-button px-2">welcome {{ request.user }}</b>
+                <a href="{% url 'logout' %}" class="btn btn-light p-2">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-light ml-2">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign Up</a>
+            {% endif %}
+        </div>
+
+        <br/>
+    </div>
 </div>

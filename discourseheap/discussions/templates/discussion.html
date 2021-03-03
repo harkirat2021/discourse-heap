@@ -3,7 +3,24 @@
 {% load static %}
 
 {% block content %}
-<p>dsp</p>
+<div class="container">
+    <h4>{{ discussion.event.title }}</h4>
+    <hr/>
+
+    {% for message in messages %}
+        {% include 'message.html' with message=message %}
+    {% endfor %}
+
+    <br/>
+    
+    <div class="message-div">
+        <br/>
+        <textarea></textarea>
+        <a style="float:left;" class="btn btn-light ml-2">Propose Common Ground</a>
+        <a style="float:right;" class="btn btn-light ml-2">Send Message</a>
+        <br/><br/><br/>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascript %}

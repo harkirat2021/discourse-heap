@@ -1,0 +1,32 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+
+<div class="accounts-div" >
+  <form class="login" method="post" id="login">
+      {% csrf_token %}
+      <h2>Login</h2>
+
+      {% csrf_token %}
+      {% for field in form %}
+        <div>
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% for error in field.errors %}
+            <div>{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <br/>
+
+      <div>
+          <input class="btn btn-primary ml-2" type="submit" value="login"/>
+          <input type="hidden" name="next" value="{{ next }}" />
+      </div>
+
+      <br/>
+      <p class="text-secondary">Don't have an account? <a style="font-size: large;" href="{% url 'signup' %}">sign up for free</a></p>
+  </form>
+</div>
+{% endblock %}

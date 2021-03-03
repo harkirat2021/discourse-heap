@@ -3,5 +3,39 @@
 {% load static %}
 
 {% block content %}
-    <p>HO MEW OWRKkas !</p>
+    <div style="background-image: url('{{ event.img_src }}'); background-size: cover; height: 20em;height:28em;">
+        <br/><br/>
+
+        <div class="container event-div">
+            <h4>{{ event.title }}</h4>
+
+            <hr/>
+            <p class="text-secondary">{{ event.description }}</p>
+            <br/>
+
+            <div style="float:right;">
+                <a href="{% url 'event' pk=event.pk %}" class="btn btn-primary ml-2">Enter Event</a>
+            </div>
+
+            <br/><br/>
+        </div>
+
+        <br/>
+    </div>
+
+    <br/>
+
+    <div class="container" style="text-align: center;">
+        <h3>How it Works</h1>
+        <p>...</p>
+        <a href="{% url 'about' %}">More about us</a>
+
+        <br/><br/><br/><br/>
+
+        <h4>Sign Up for Free</h3>
+            <br/>
+        <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Create Account</a>
+
+        <br/><br/><br/><br/>
+    </div>
 {% endblock %}

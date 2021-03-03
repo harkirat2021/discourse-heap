@@ -12,6 +12,7 @@ form.label-block label, .signup-form form p small{display: block}
 .kreon-font{font-family: 'Kreon'}
 .customopacity{opacity: .8}
 .card .small-text{font-size: x-small}
+
 textarea {
     height: 4em;
     width: 100%;
@@ -19,44 +20,77 @@ textarea {
     resize: none;
 }
 
+.event-div {
+  background-color: white;
+  margin: auto;
+  padding: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+  border-radius: 0.5em;
+}
+
+.accounts-div {
+  background-color: white;
+  margin: auto;
+  padding: 2em;
+  border: 1px solid lightgray;
+  border-radius: 0.5em;
+  width: 30em;
+  text-align: center;
+}
+
+.accounts-div input {
+  width: 100%;
+}
+
+.start-message-div {
+  border-radius: 0.25em;
+  border: 1px solid lightgray;
+  padding: 1em;
+}
+
+.message-div {
+  padding: 0.5em;
+}
+
 #snackbar {
-    visibility: hidden;
-    min-width: 20em;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 0.2em;
-    padding: 1em;
-    position: fixed;
-    z-index: 1;
-    left: 50%;
-    bottom: 2em;
-    font-size: 1em;
-  }
-  
-  #snackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  }
-  
-  @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 30px; opacity: 1;}
-  }
-  
-  @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
-  }
-  
-  @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
-    to {bottom: 0; opacity: 0;}
-  }
-  
-  @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
-  }
+  visibility: hidden;
+  min-width: 20em;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.2em;
+  padding: 1em;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 2em;
+  font-size: 1em;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}

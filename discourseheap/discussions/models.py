@@ -19,24 +19,23 @@ class Profile(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=400, null=False)
     description = models.TextField(null=False)
-    start_date = models.DateTimeField('date created')
-    end_date = models.DateTimeField('date created')
+    img_src = models.TextField(null=True, blank=True)
+    start_date = models.DateTimeField('date start')
+    end_date = models.DateTimeField('date end')
 
     def __str__(self):
         return self.title
 
 # Discussion
 class Discussion(models.Model):
-    ONGOING = 0
-    COMMON_GROUND_ACHIEVED = 1
-    NO_CONCLUSION = 2
+    NOT_STARTED = 0
+    ONGOING = 1
+    COMMON_GROUND_ACHIEVED = 2
+    NO_CONCLUSION = 3
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=False)
     creation_date = models.DateTimeField('date created')
     conclusion = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.title
 
 # Message
 class Message(models.Model):
@@ -46,7 +45,7 @@ class Message(models.Model):
 
     message_type = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=False)
+    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=False)
     text = models.TextField(null=False)
     date = models.DateTimeField('date')
