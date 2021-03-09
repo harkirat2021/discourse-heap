@@ -12,15 +12,19 @@
         <p id="post-message" style="text-align:center;"></p>
 
         <div class="bordered-container">
-            <p style="float:left;">Post your view on the topic</p>
-            <button id="open-post-form" class="btn btn-primary ml-2" onclick="togglePostViewForm(true);" style="float:right;">Post</button>
-            <br/>
-            <div id="post-view-div" style="display:none;">
-                <textarea id="view-text" cols="30" rows="10"></textarea>
-                <button class="btn btn-light ml-2" onclick="togglePostViewForm(false);" style="float:left;">Cancel</button>
-                <button class="btn btn-primary ml-2" onclick="postView();" style="float:right;">Post</button>
-                <br/><br/>
-            </div>
+            {% if request.user.is_authenticated %}
+                <p style="float:left;">Post your view on the topic</p>
+                <button id="open-post-form" class="btn btn-primary ml-2" onclick="togglePostViewForm(true);" style="float:right;">Post</button>
+                <br/>
+                <div id="post-view-div" style="display:none;">
+                    <textarea id="view-text" cols="30" rows="10"></textarea>
+                    <button class="btn btn-light ml-2" onclick="togglePostViewForm(false);" style="float:left;">Cancel</button>
+                    <button class="btn btn-primary ml-2" onclick="postView();" style="float:right;">Post</button>
+                    <br/><br/>
+                </div>
+            {% else %}
+                <p class="text-secondary" style="text-align: center;">You must sign in to post your view</p>
+            {% endif %}
         </div>
         
         <br/><hr/><br/>
@@ -55,15 +59,30 @@
         {% if request.user.is_authenticated %}
             $.ajax({
                 url: "{% url 'post_view' event_pk=event.pk %}",
+                type: "POST",
                 data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
                     "text": document.getElementById("view-text").value
                 },
                 dataType: 'json',
                 success: function (data) {
+                    if (data.wasPosted) {
+                        var msg = document.getElementById("post-message");
+                        msg.style.color = 'green';
+                        msg.innerHTML = "Your view has been posted";
+                        //refreshEventPosts(data.messages);
+                    } else {
+                        var msg = document.getElementById("post-message");
+                        msg.style.color = 'red';
+                        msg.innerHTML = "Error posting view";
+                        console.log(error);
+                    }
+                },
+                error: function (request, status, error) {
                     var msg = document.getElementById("post-message");
-                    msg.style.color = 'green';
-                    msg.innerHTML = "Your view has been posted";
-                    //refreshEventPosts(data.messages);
+                    msg.style.color = 'red';
+                    msg.innerHTML = "Error posting view";
+                    console.log(error);
                 }
             });
         {% else %}

@@ -1,0 +1,6 @@
+channels==3.0.3
+Django==3.1.7
+django-channels==0.7.0
+django-cors-headers==3.7.0
+pytz==2020.5
+urllib3==1.26.2
