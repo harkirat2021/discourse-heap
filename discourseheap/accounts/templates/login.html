@@ -7,13 +7,15 @@
       {% csrf_token %}
       <h2>Login</h2>
 
+      <p style="color: red">{{ error_msg }}</p>
+
       {% csrf_token %}
       {% for field in form %}
         <div>
           {{ field.label_tag }}<br>
           {{ field }}
           {% for error in field.errors %}
-            <div>{{ error }}</div>
+              <p style="color: red">{{ error }}</p>
           {% endfor %}
         </div>
       {% endfor %}

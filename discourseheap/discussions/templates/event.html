@@ -9,15 +9,87 @@
         <p class="text-secondary">{{ event.description }}</p>
         <br/>
 
-        <p style="float:left;">Post your view on the topic</p>
-        <a href="{% url 'event' pk=event.pk %}" class="btn btn-primary ml-2" style="float:right;">Post</a>
-        <br/><br/>
+        <p id="post-message" style="text-align:center;"></p>
 
-        <hr/>
+        <div class="bordered-container">
+            <p style="float:left;">Post your view on the topic</p>
+            <button id="open-post-form" class="btn btn-primary ml-2" onclick="togglePostViewForm(true);" style="float:right;">Post</button>
+            <br/>
+            <div id="post-view-div" style="display:none;">
+                <textarea id="view-text" cols="30" rows="10"></textarea>
+                <button class="btn btn-light ml-2" onclick="togglePostViewForm(false);" style="float:left;">Cancel</button>
+                <button class="btn btn-primary ml-2" onclick="postView();" style="float:right;">Post</button>
+                <br/><br/>
+            </div>
+        </div>
+        
+        <br/><hr/><br/>
 
         {% for message in messages %}
             {% include 'start_message.html' with message=message %}
             <br/>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function(){
+        //refreshEventPosts();
+    });
+
+    // Toggle post view form
+    function togglePostViewForm(show) {
+        if (show) {
+            document.getElementById("post-view-div").style.display = "block";
+            document.getElementById("open-post-form").style.display = "none";
+        } else {
+            document.getElementById("post-view-div").style.display = "none";
+            document.getElementById("open-post-form").style.display = "block";
+        }
+    }
+
+    // Post the view if logged in
+    function postView() {
+        // This is weird, don't think about it too much
+        {% if request.user.is_authenticated %}
+            $.ajax({
+                url: "{% url 'post_view' event_pk=event.pk %}",
+                data: {
+                    "text": document.getElementById("view-text").value
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var msg = document.getElementById("post-message");
+                    msg.style.color = 'green';
+                    msg.innerHTML = "Your view has been posted";
+                    //refreshEventPosts(data.messages);
+                }
+            });
+        {% else %}
+            var msg = document.getElementById("post-message");
+            msg.style.color = 'red';
+            msg.innerHTML = "You must sign in to post";
+        {% endif %}
+    }
+    
+    // Get all the posts on this event
+    function refreshEventPosts() {
+        $.ajax({
+            url: "{% url 'get_event_posts' pk=event.pk %}",
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                displayMessages(data.messages);
+            }
+        });
+    }
+
+    // Display messages for this event
+    function displayMessages(messages) {
+        messagesHtml = "";
+
+        //...
+    }
+</script>
 {% endblock %}
