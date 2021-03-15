@@ -39,8 +39,8 @@ class Discussion(models.Model):
 
 # Message
 class Message(models.Model):
-    INITIAL = 0
-    RESPONSE = 1
+    INITIAL_VIEW = 0
+    DISCUSSION = 1
     COMMON_GROUND_PROPOSAL = 2
 
     message_type = models.IntegerField(default=0)
@@ -49,3 +49,6 @@ class Message(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=False)
     text = models.TextField(null=False)
     date = models.DateTimeField('date')
+
+    def __str__(self):
+        return self.text

@@ -3,13 +3,13 @@
     <div class="container py-3">
 
         <div style="float:left;">
-            <a href="{% url 'home' %}" class="text-secondary p-2">Home</a>
+            <a href="{% url 'home' %}" class="text-secondary p-2">Discourse<b>Stack</b></a>
             <a href="{% url 'about' %}" class="text-secondary p-2">About</a>
         </div>
 
         <div style="float:right;">
             {% if request.user.is_authenticated %}
-                <b class="nav-head-button px-2">welcome {{ request.user }}</b>
+                <b class="nav-head-button px-2"><b class="common-ground-points">1</b>welcome {{ request.user }}</b>
                 <a href="{% url 'logout' %}" class="btn btn-light p-2">Logout</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn btn-light ml-2">Login</a>

@@ -6,8 +6,12 @@ urlpatterns = [
     path('about', views.about, name="about"),
 
     path('event/<int:pk>', views.event, name="event"),
-    path('post-event/<int:event_pk>', views.post_view, name="post_view"),
+    path('post-view/<int:event_pk>', views.post_view, name="post_view"),
     path('get-event-posts/<int:pk>', views.get_event_posts, name="get_event_posts"),
 
+    path('join-discussion/<int:message_pk>', views.join_discussion, name="join_discussion"),
     path('discussion/<int:pk>', views.discussion, name="discussion"),
+
+    path('post-message/<int:discussion_pk>', views.post_message, name="post_message"),
+    path('get-discussion-messages/<int:pk>', views.get_discussion_messages, name="get_discussion_messages"),
 ]

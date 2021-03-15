@@ -17,7 +17,7 @@
                 <button id="open-post-form" class="btn btn-primary ml-2" onclick="togglePostViewForm(true);" style="float:right;">Post</button>
                 <br/>
                 <div id="post-view-div" style="display:none;">
-                    <textarea id="view-text" cols="30" rows="10"></textarea>
+                    <textarea id="view-text" cols="30" rows="20"></textarea>
                     <button class="btn btn-light ml-2" onclick="togglePostViewForm(false);" style="float:left;">Cancel</button>
                     <button class="btn btn-primary ml-2" onclick="postView();" style="float:right;">Post</button>
                     <br/><br/>
@@ -29,17 +29,14 @@
         
         <br/><hr/><br/>
 
-        {% for message in messages %}
-            {% include 'start_message.html' with message=message %}
-            <br/>
-        {% endfor %}
+        <div id="view-posts"></div>
     </div>
 {% endblock %}
 
 {% block javascript %}
 <script>
     $(document).ready(function(){
-        //refreshEventPosts();
+        refreshEventPosts();
     });
 
     // Toggle post view form
@@ -55,6 +52,7 @@
 
     // Post the view if logged in
     function postView() {
+        if (document.getElementById("view-text").value==""||document.getElementById("view-text").value==" ") {return}
         // This is weird, don't think about it too much
         {% if request.user.is_authenticated %}
             $.ajax({
@@ -70,7 +68,11 @@
                         var msg = document.getElementById("post-message");
                         msg.style.color = 'green';
                         msg.innerHTML = "Your view has been posted";
-                        //refreshEventPosts(data.messages);
+                        // refresh posts
+                        refreshEventPosts();
+                        // clear text and close form
+                        document.getElementById("view-text").value = "";
+                        togglePostViewForm(false);
                     } else {
                         var msg = document.getElementById("post-message");
                         msg.style.color = 'red';
@@ -108,7 +110,19 @@
     function displayMessages(messages) {
         messagesHtml = "";
 
-        //...
+        for (i = 0; i < messages.length; i++) {
+            console.log(messages[i]);
+            messagesHtml += "<div class='start-message-div'>";
+            messagesHtml += "<h6>" + messages[i].user +"</h6><p>" + messages[i].text + "</p>";
+
+            // Don't allow user to respond to self
+            if (messages[i].user != "{{ request.user }}") {
+                messagesHtml += "<a class='ml-2' style='float:right;' href='/discussions/join-discussion/" + messages[i].pk + "'>Respond</a><br/>";
+            }
+            messagesHtml += "</div></br>";
+        }
+
+        document.getElementById("view-posts").innerHTML = messagesHtml;
     }
 </script>
 {% endblock %}
