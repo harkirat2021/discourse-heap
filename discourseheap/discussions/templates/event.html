@@ -29,7 +29,27 @@
         
         <br/><hr/><br/>
 
+        <div style="text-align:center;">
+            <button class="btn btn-light ml-2" onclick="toggleTab(true);">View Posts</button>
+            <button class="btn btn-light ml-2" onclick="toggleTab(false);">Published</button>
+        </div>
+
+        <br/><br/>
+
         <div id="view-posts"></div>
+
+        <div id="published-discussions" style="display:none;">
+            <h5 style="text-align:center;">Published Discussions</h5>
+            <br/>
+            {% for d in discussions %}
+                <div class='start-message-div'>
+                    <h6>{{d.event.title}}</h4>
+                    <p class="text-secondary">{{d.text}}</p>
+                    <a href="{% url 'discussion' pk=d.discussion.pk %}">see full discussion</a>
+                </div>
+                <br/>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
 
@@ -38,6 +58,16 @@
     $(document).ready(function(){
         refreshEventPosts();
     });
+
+    function toggleTab(showViews) {
+        if (showViews) {
+            document.getElementById("view-posts").style.display = "block";
+            document.getElementById("published-discussions").style.display = "none";
+        } else {
+            document.getElementById("view-posts").style.display = "none";
+            document.getElementById("published-discussions").style.display = "block";
+        }
+    }
 
     // Toggle post view form
     function togglePostViewForm(show) {
@@ -108,7 +138,7 @@
 
     // Display messages for this event
     function displayMessages(messages) {
-        messagesHtml = "";
+        messagesHtml = "<h5 style='text-align:center;'>Views on this topic</h5>";
 
         for (i = 0; i < messages.length; i++) {
             console.log(messages[i]);

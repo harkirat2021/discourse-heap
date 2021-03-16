@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h4 style="text-align:center;">My Discussions</h4>
+        <br/>
+        {% for d in my_discussion_messages %}
+            {% if d.message_type %}
+            <div class='start-message-div'>
+                <h6>{{d.event.title}}</h4>
+                <p class="text-secondary">{{d.text}}</p>
+                <a href="{% url 'discussion' pk=d.discussion.pk %}">see full discussion</a>
+            </div>
+            <br/>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

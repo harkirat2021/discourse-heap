@@ -5,6 +5,9 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('about', views.about, name="about"),
 
+    path('my-discussions', views.my_discussions, name="my_discussions"),
+    path('accept-common-ground/<int:message_pk>', views.accept_common_ground, name="accept_common_ground"),
+
     path('event/<int:pk>', views.event, name="event"),
     path('post-view/<int:event_pk>', views.post_view, name="post_view"),
     path('get-event-posts/<int:pk>', views.get_event_posts, name="get_event_posts"),

@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     about = models.TextField(blank=True)
+    common_ground_points = models.IntegerField(default=0)
 
     #TODO figure out why it says => NameError: name 'receiver' is not defined
     @receiver(post_save, sender=User)
@@ -35,7 +36,7 @@ class Discussion(models.Model):
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=False)
     creation_date = models.DateTimeField('date created')
-    conclusion = models.IntegerField(default=0)
+    state = models.IntegerField(default=0)
 
 # Message
 class Message(models.Model):

@@ -14,7 +14,7 @@
     <p id="post-message" style="text-align:center;"></p>
 </div>
 
-{% if user.is_authenticated %}
+{% if user.is_authenticated and discussion.state != 2 %}
 <br/><br/><br/>
     <div class="send-message-div">
         <div class="container">
@@ -82,11 +82,6 @@
         {% endif %}
     }
 
-    function proposeCommonGround() {
-
-    }
-
-
     // Get all the posts on this event
     function refreshMessages() {
         $.ajax({
@@ -118,7 +113,7 @@
                 if (messages[i].user == "{{ request.user }}") {
                     messagesHtml += "<p style='color:gray;'>(waiting for other user to accept or reject)</p>";
                 } else {
-                    messagesHtml += "<div style='float:right;'><button class='btn btn-primary ml-2'>accept</button><button class='btn btn-danger ml-2'>reject</button></div><br/><br/>";
+                    messagesHtml += "<div style='float:right;color:white;'><a class='btn btn-primary ml-2' onclick='acceptCommonGround(" + messages[i].pk + ");'>accept</a></div><br/><br/>";
                 }
             }
 
@@ -130,6 +125,11 @@
 
         document.getElementById("messages").innerHTML = messagesHtml;
     }
+
+function acceptCommonGround(mssgPk) {
+    alert("You are accepting common ground. Each discussion participant will be awarded 1 common ground point. You will be redirected to the event page");
+    window.location.href = "/discussions/accept-common-ground/" + mssgPk;
+}
 </script>
 
 {% endblock %}

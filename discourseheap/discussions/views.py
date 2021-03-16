@@ -22,9 +22,30 @@ def home(request):
 def about(request):
     return render(request, 'about.html', context={})
 
+@login_required
+def my_discussions(request):
+    user_messages = Message.objects.filter(user=request.user).order_by("-date")
+    my_discussion_messages = []
+    discussions = []
+    for m in user_messages:
+        if not m.discussion in discussions:
+            my_discussion_messages.append(m)
+            discussions.append(m.discussion)
+    
+    return render(request, 'my_discussions.html', context={"my_discussion_messages":my_discussion_messages})
+
 def event(request, pk):
     event = get_object_or_404(Event, pk=pk)
-    return render(request, 'event.html', context={"event":event})
+    event_messages = Message.objects.filter(event=event).order_by("-date")
+
+    discussion_messages = []
+    discussions = []
+    for m in event_messages:
+        if (not m.discussion in discussions) and (m.discussion.state == Discussion.COMMON_GROUND_ACHIEVED):
+            discussion_messages.append(m)
+            discussions.append(m.discussion)
+    
+    return render(request, 'event.html', context={"event":event, "discussions":discussion_messages})
 
 def get_event_posts(request, pk):
     event = get_object_or_404(Event, pk=pk)
@@ -57,7 +78,7 @@ def join_discussion(request, message_pk):
     message = get_object_or_404(Message, pk=message_pk)
 
     # Create new discussion and copy message to it
-    discussion = Discussion(event=message.event, creation_date=datetime.datetime.now())
+    discussion = Discussion(event=message.event, creation_date=datetime.datetime.now(), state=1)
     discussion.save()
 
     message = Message(message_type=Message.DISCUSSION, user=message.user, event=message.event, discussion=discussion, text=message.text, date=message.date)
@@ -94,3 +115,23 @@ def post_message(request, discussion_pk):
 
         return JsonResponse({"wasPosted": True})
     return JsonResponse({"wasPosted": False})
+
+@login_required
+def accept_common_ground(request, message_pk):
+    # change message
+    message = get_object_or_404(Message, pk=message_pk)
+    message.message_type = Message.DISCUSSION
+    message.save()
+
+    # change discussion
+    discussion = get_object_or_404(Discussion, pk=message.discussion.pk)
+    discussion.state = Discussion.COMMON_GROUND_ACHIEVED
+    discussion.save()
+
+    # update points
+    request.user.profile.common_ground_points += 1
+    message.user.profile.common_ground_points += 1
+    request.user.profile.save()
+    message.user.profile.save()
+
+    return redirect('/discussions/event/' + str(message.event.pk))
